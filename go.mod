@@ -1,4 +1,4 @@
-module github.com/myafeier/neoby_model
+module github.com/myafeier/neoby_common_model
 
 require (
 	cloud.google.com/go v0.34.0 // indirect
