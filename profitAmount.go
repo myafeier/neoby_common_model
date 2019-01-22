@@ -103,11 +103,13 @@ func TChangeProfitAmount(session *xorm.Session, action string, reward *Reward,wi
 				pa.Id=1
 			}else if reward.StoreId != reward.RecommendBossId { //非两油的商户
 				pa.StoreId = reward.RecommendBossId
+				pa.Type=ProfitAmountAccountTypeOfMerchant
 			} else { //两油的油站
 				pa.StoreId = reward.StoreId //自己推荐的自己
 				pa.BossId = reward.BossId
+				pa.Type=ProfitAmountAccountTypeOfMerchant
 			}
-			pa.Type=ProfitAmountAccountTypeOfMerchant
+
 		} else { //纯碎的商户/门店账户
 			pa.StoreId = reward.StoreId
 			pa.BossId = reward.BossId
