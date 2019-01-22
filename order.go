@@ -24,13 +24,12 @@ type Order struct {
 	UserCouponsId   string `json:"usercouponsid,omitempty" xorm:"'usercouponsid' char(100)" gorm:"column:usercouponsid;type:char(100)"`   //usercouponsid 用户卡券id
 	PayMoney        int64  `json:"paymoney,omitempty" xorm:"'paymoney' char(100)" gorm:"column:paymoney;type:char(100)"`                  //paymoney 实付金额
 	SettlementTime  int64  `json:"settlement_time,omitempty" xorm:"'settlement_time' int(11)" gorm:"column:settlement_time;type:int(11)"` //settlement_time 佣金结算时间
-	UpdateTime      int64  `json:"update_time,omitempty" xorm:"'update_time' int(11)" gorm:"column:update_time;type:int(11)"`             //update_time 更新时间
-	CreateTime      int64  `json:"create_time,omitempty" xorm:"'create_time' int(11)" gorm:"column:create_time;type:int(11)"`             //update_time 更新时间
+	ProfitId        int64  `json:"profit_id" xorm:"'profitid' int(11)" gorm:"column:profitid;type:int(11)"`
+	UpdateTime      int64  `json:"update_time,omitempty" xorm:"'update_time' int(11)" gorm:"column:update_time;type:int(11)"` //update_time 更新时间
+	CreateTime      int64  `json:"create_time,omitempty" xorm:"'create_time' int(11)" gorm:"column:create_time;type:int(11)"` //update_time 更新时间
 }
 
-
-
-func (self Order)TableName() string  {
+func (self Order) TableName() string {
 	return "jyb_order"
 }
 
