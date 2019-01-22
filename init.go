@@ -12,7 +12,7 @@ var RemoteDB *xorm.Engine
 func InitRemoteDB(ip, port, user, password, dbname string, showSQL bool) (err error) {
 	RemoteDB, err = xorm.NewEngine("mysql", user+":"+password+"@tcp("+ip+":"+port+")/"+dbname+"?charset=utf8mb4")
 	if err != nil {
-		return
+		return err
 	}
 	RemoteDB.SetMaxIdleConns(10)
 	RemoteDB.SetMaxOpenConns(100)
@@ -32,6 +32,7 @@ func InitLocalDB(ip, port, user, password, dbname string, showSQL bool) (err err
 	LocalDB.ShowSQL(showSQL)
 	return
 }
+
 
 //初始化本元账户of 收益
 func InitNeobyAccountOfProfitAmount() (err error) {
