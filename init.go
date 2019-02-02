@@ -55,30 +55,52 @@ func InitNeobyAccountOfProfitAmount() (err error) {
 }
 
 func UpdateRemoteDbStructOfTable() (err error) {
-	_, err = RemoteDB.Exec("alter table jyb_store add column profit_freeze_day int(11)")
+	_, err = RemoteDB.Exec("alter table jyb_store add column profit_freeze_day int(11) default 0")
 	return
 }
 
+func SyncLocalDbTable()(err error){
+	//var tables = []interface{}{Order{}}
+	err=LocalDB.Sync2(Order{})
+	return
+}
+
+func CreateProfitAmountsTable()(err error){
+	var tables = []interface{}{ProfitAmount{}, ProfitAmountLog{}}
+	err=createTable(RemoteDB,tables)
+	return
+}
+func SyncCommissionTable()(err error){
+	var tables = []interface{}{Commission{}, CommissionRule{},CommissionMapping{}}
+	err=createTable(RemoteDB,tables)
+	return
+}
+
+
 func CreateLocalDBTable() (err error) {
 	var tables = []interface{}{ProfitAmount{}, ProfitAmountLog{}, Reward{}, Withdraw{}, Order{}}
-	//DB.Sync2(tables)
+	err=createTable(LocalDB,tables)
+	return
+}
 
+func createTable(engine *xorm.Engine,tables []interface{})(err error){
 	var isExist bool
 	for _, v := range tables {
-		isExist, err = LocalDB.IsTableExist(v)
+		isExist, err = engine.IsTableExist(v)
 		if err != nil {
 			return
 		}
 		if !isExist {
-			err = LocalDB.CreateTables(v)
+			err = engine.CreateTables(v)
 			if err != nil {
 				return
 			}
-			err = LocalDB.CreateIndexes(v)
+			err = engine.CreateIndexes(v)
 			if err != nil {
 				return
 			}
 		}
 	}
 	return
+
 }

@@ -7,6 +7,10 @@ type Store struct {
 }
 
 
+func (self Store)TableName() string  {
+	return "jyb_store"
+}
+
 func GetStoreById(storeId int64)(store *Store,err error){
 	store=new(Store)
 	_,err=RemoteDB.Table("jyb_store").Where("id=?",storeId).Get(store)

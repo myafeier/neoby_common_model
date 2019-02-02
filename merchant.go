@@ -13,6 +13,11 @@ type Merchant struct {
 	EmployeeUserId string `xorm:"cmpyuserid" gorm:"column:cmpyuserid;type:varchar(100)"`  //cmpyuserid  关联的公司业务员
 }
 
+func (self Merchant) TableName() string {
+	return "jyb_bossinfo"
+}
+
+
 func GetMerchantById(merchantId int64)(merchant *Merchant,err error ){
 	merchant=new(Merchant)
 	_,err=RemoteDB.Table("jyb_bossinfo").Select("id,categoryid,cmpyuserid").Where("id=?",merchantId).Get(merchant)

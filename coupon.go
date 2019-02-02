@@ -10,12 +10,22 @@ type Coupon struct {
 	RuleF string `gorm:"-" xorm:"-"`
 }
 
+func (self Coupon) TableName() string {
+	return "jyb_coupons"
+}
+
+
 //折扣券规则，如果没有记录，则为"套餐分润"
 // jyb_cpsrules
 type Rule struct {
 	Id int64 `gorm:"primary_key"`
 	Name string `xorm:"char(100) default '' " gorm:"column:name;type:char(100)"` // name 规则名称
 }
+
+func (self Rule) TableName() string {
+	return "jyb_cpsrules"
+}
+
 
 func GetACouponsWithRule()(coupons []*Coupon,err error){
 
