@@ -221,7 +221,7 @@ func updateAccountAmount(session *xorm.Session,accountId int64,action string,amo
 			return
 		}
 	case ProfitActionWithdraw: //提现
-		affectNum, err = session.ID(npa.Id).Cols("free_amount", "total_amount", ).Decr("free_amount", amount).Decr("total_amount", amount).Incr("withdrew_amount",amount).Where("free_amount-?>=0", amount).And("total_amount-?>=0", amount).Update(npa)
+		affectNum, err = session.ID(npa.Id).Cols("free_amount" ).Decr("free_amount", amount).Incr("withdrew_amount",amount).Where("free_amount-?>=0", amount).Update(npa)
 		if err != nil {
 			return
 		}
