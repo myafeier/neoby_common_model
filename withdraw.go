@@ -47,7 +47,9 @@ func GetProfitAmountOfWithdraw(withdraw *Withdraw) (profitAmountId int64, err er
 	} else if withdraw.OutreachId > 0 {
 		session.Where("type=?", ProfitAmountAccountTypeOfOutreach).And("outreach_id=?", withdraw.OutreachId)
 	} else if withdraw.StoreId > 0 {
-		session.Where("type=?", ProfitAmountAccountTypeOfMerchant).And("store_id=?", withdraw.StoreId)
+		session.Where("type=?", ProfitAmountAccountTypeOfStore).And("store_id=?", withdraw.StoreId)
+	}else if withdraw.MerchantId>0{
+		session.Where("type=?", ProfitAmountAccountTypeOfBoss).And("boss_id=? and store_id=0", withdraw.MerchantId)
 	}
 	pa := new(ProfitAmount)
 	has, err := session.Get(pa)

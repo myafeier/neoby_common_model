@@ -3,6 +3,7 @@ package model
 // 对应表 jyb_store
 type Store struct {
 	Id int64 `gorm:"primary_key"`
+	Name string `xorm:"varchar(255) default ''"`//
 	ProfitFreezeDay int `xorm:"int(11) default 0" gorm:"column:profit_freeze_day;type:int(11)"`  //分润冻结天数
 }
 
