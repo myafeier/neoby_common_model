@@ -17,7 +17,7 @@ type Order struct {
 	RecommendId     int64   `json:"recommendid,omitempty" xorm:"'recommendid' int(11)"`         //C端推荐人id
 	RecommendBossId int64   `json:"recommendbossid,omitempty" xorm:"'recommendbossid' int(11)"` //推荐商家id
 	CouponsId       int64   `json:"couponsid,omitempty" xorm:"'couponsid' int(11)"`             //couponsid 机构卡券id
-	GoodsId         int64   `json:"goodsid" xorm:"-"`           //商品id
+	GoodsId         int64   `json:"goodsid" xorm:"-"`                                           //商品id
 	PayMoney        int64   `json:"paymoney,omitempty" xorm:"'paymoney' char(100)"`             //paymoney 实付金额
 	Profit          int64   `json:"profit,omitempty" xorm:"'profit' char(100)"`                 //profit 毛利润总金额，单位：分
 	CompanyMoney    string  `json:"cmpymoney,omitempty" xorm:"'cmpymoney' char(100)"`           //cmpymoney char(100) 公司订单收入
@@ -33,10 +33,20 @@ type Order struct {
 	Services        float64 `json:"services,omitempty" xorm:"'services' default 0"`             //`services` varchar(100) NOT NULL DEFAULT '' COMMENT '服务费',
 	Iswh            int     `json:"iswh,omitempty" xorm:"'iswh' default 0"`                     //`iswh` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0-默认(滇惠通)，1-官渡-文惠，2-其他未知',
 	Sxf             string  `json:"sxf,omitempty" xorm:"'sxf' default 0"`                       //`sxf` varchar(100) NOT NULL DEFAULT '' COMMENT '交易手续费',
+	YPid            int64   `json:"ypid,omitempty" xorm:"'ypid' default 0"`                     // `ypid` int(11)
 	UpdateTime      int64   `json:"update_time,omitempty" xorm:"'update_time' int(11)"`         //update_time 更新时间
 	CreateTime      int64   `json:"create_time,omitempty" xorm:"'create_time' int(11)"`         //update_time 更新时间
 }
 
+
+func (self *Order) UpdateMatchId() (num int64, err error) {
+	return LocalDB.ID(self.Id).Cols("match_cnpc_id").Update(self)
+}
+
+func (self *Order) Write() (err error) {
+	
+	return
+}
 func (self Order) TableName() string {
 	return "jyb_order"
 }
